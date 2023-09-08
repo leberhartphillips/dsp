@@ -13,7 +13,7 @@ require(duckdb)
 require(tidyverse)
 require(ggmap)
 require(rnaturalearth)
-register_google(key = "AIzaSyD0jdmyk90b2p6z5nUumqCa6qsK8gPo-tw")
+# register_google(key = "")
 con <- dbcon(db = "AVES_ranges")
 
 DSPL <- dbq(con, 'SELECT scinam, SHAPE
