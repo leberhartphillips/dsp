@@ -39,13 +39,13 @@ invisible(lapply(libs, library, character.only = T))
 my_api <- "252187" # PLEASE INSERT YOUR API USER ID
 my_key <- "e7c99a46-b872-45f6-a80c-671b50c61e3f" # PLEASE INSERT YOUR API KEY
   
-start_date <- "2022-01-01"
-end_date <- "2023-01-01"
+start_date <- "1950-02-02"
+end_date <- "2023-08-08"
 
-poland_sf <- giscoR::gisco_get_countries(
-  country = "PL",
-  resolution = 10
-)
+# poland_sf <- giscoR::gisco_get_countries(
+#   country = "PL",
+#   resolution = 10
+# )
 
 DSPL_temp <- KrigR::download_ERA(
   Variable = "2m_temperature",
@@ -56,6 +56,20 @@ DSPL_temp <- KrigR::download_ERA(
   TStep = 1,
   Dir = "data/climate/tmp/",
   FileName = "DSPL_2m_temperature",
+  Extent = as(DSPL, "Spatial"),
+  API_User = my_api,
+  API_Key = my_key
+)
+
+DSPL_temp_all <- KrigR::download_ERA(
+  Variable = "2m_temperature",
+  DataSet = "era5-land",
+  DateStart = start_date,
+  DateStop = end_date,
+  TResolution = "month",
+  TStep = 1,
+  Dir = "data/climate/tmp/",
+  FileName = "DSPL_monthly_2m_temperature_all_years",
   Extent = as(DSPL, "Spatial"),
   API_User = my_api,
   API_Key = my_key
@@ -86,7 +100,7 @@ poland_temp[["X6"]] |>
 # 2. NC TO DATAFRAME
 #-------------------
 poland_temp_df <- as.data.frame(
-  poland_temp,
+  DSPL_temp,
   xy = T, na.rm = T
 )
 
